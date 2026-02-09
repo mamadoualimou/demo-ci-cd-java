@@ -10,7 +10,7 @@ public class CalculatorTest {
     @Test
     void shouldAddTwoNumbers(){
         Calculator calculator = new Calculator();
-        assertEquals(6, calculator.add(2,3));
+        assertEquals(5, calculator.add(2,3));
     }
 
 }
