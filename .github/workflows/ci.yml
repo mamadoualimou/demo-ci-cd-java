@@ -1,9 +1,7 @@
-name: Java CI Pipeline
+name: Java CI + Docker
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -11,21 +9,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Récupérer le code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Installer Java
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'maven' # Optionnel mais recommandé : accélère les prochains builds
 
-      - name: Build complet (Compilation + Tests + Packaging)
-        run: mvn clean install
+      - name: Build & Test
+        run: mvn clean package
 
-      - name: Sauvegarder l'artefact (.jar)
-        uses: actions/upload-artifact@v4
-        with:
-          name: mon-application-java
-          path: target/*.jar
+      - name: Build Docker image
+        run: docker build -t demo-ci-cd-java .
