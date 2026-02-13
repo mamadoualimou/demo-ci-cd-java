@@ -1,0 +1,13 @@
+services:
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio_server
+    ports:
+      - "9000:9000"    # Port pour l'API (Spring Boot l'utilisera)
+      - "9001:9001"    # Port pour la Console (Interface Web)
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadminpassword
+    volumes:
+      - ./minio_data:/data
+    command: server /data --console-address ":9001"
